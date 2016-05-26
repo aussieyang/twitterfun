@@ -6,6 +6,12 @@ class PostsController < ApplicationController
   # Index page '/'
   def home
     @users = User.all
+    @posts = Post.all
+
+    # grabbing API
+    response = HTTParty.get('http://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=10')
+    # accessing
+    @rdmquote = response.inspect
   end
 
   # GET /posts
