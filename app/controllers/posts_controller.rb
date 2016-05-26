@@ -9,9 +9,14 @@ class PostsController < ApplicationController
     @posts = Post.all
 
     # grabbing API
-    response = HTTParty.get('http://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=10')
-    # accessing
-    @rdmquote = response.inspect
+    quotes = HTTParty.get('http://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=10')
+    chuck = HTTParty.get('http://api.icndb.com/jokes/random/10')
+    catfacts = HTTParty.get('http://catfacts-api.appspot.com/api/facts?number=10')
+    # making accessible by ERB under a variable
+    @quote = quotes
+    @chuck = chuck
+    @catfact = catfacts
+
   end
 
   # GET /posts

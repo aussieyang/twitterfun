@@ -1,3 +1,4 @@
+<% if @posts %>
 <div id='controls'>
   <input id='poster' type="text">
   <button id='btn'>Find Posts By</button>
@@ -9,7 +10,18 @@
     <p class=<%= p.user.name %> >"<%= p.content %>" - posted by <%= p.user.name %></p>
   <% end %>
 </div>
+<% end %>
 
-<div id='realquote'>
-  <%= @rdmquote %>
+<div id='quote'>
+  <% for i in 0..5 %>
+  <%= @quote[i]['content'].html_safe %>
+  <% end %>
+</div>
+
+<div id='chuck'>
+  <%= %>
+</div>
+
+<div id='catfact'>
+  <%= %>
 </div>
