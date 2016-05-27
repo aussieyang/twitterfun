@@ -29,6 +29,9 @@ gem 'bcrypt', '~> 3.1.7'
 # Using HTTParty
 gem 'httparty'
 
+# Use Nokogiri
+gem 'nokogiri'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 

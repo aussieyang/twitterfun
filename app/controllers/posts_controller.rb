@@ -1,3 +1,5 @@
+require 'nokogiri'
+
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   # Before running anything in this controller, check the dude is logged in
@@ -14,12 +16,17 @@ class PostsController < ApplicationController
     quotes = HTTParty.get('http://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=10')
     chuck = HTTParty.get('http://api.icndb.com/jokes/random/10')
     catfacts = HTTParty.get('http://catfacts-api.appspot.com/api/facts?number=10')
+    scrapyscrape = HTTParty.get('http://www.news.com.au/breaking-news.html')
 
     # making accessible by ERB under a variable
     @quote = quotes
     @chuck = chuck
       # eval() is bad practice
     @catfact = eval(catfacts)
+    # make a variable for scraped data
+    page = Nokogiri::HTML(scrapyscrape)
+    # TBC scrape
+    @news = page.css('#page').css('#content').css('#content-2').css('#newscorpau_query_posts-674').css('.group').css('.group-content').css('.item').css('.module').css('.module-content').css('.content-item').css('.story-block').css('.heading').css('a')
   end
 
   # GET /posts
