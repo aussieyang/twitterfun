@@ -1,27 +1,43 @@
 <% if @posts %>
 <div id='controls'>
-  <input id='poster' type="text">
-  <button id='btn'>Find Posts By</button>
+  <div>
+    <input id='poster' type="text">
+    <button id='btn'>Find Posts By</button>
+  </div>
+  <button id='btn-quote'>Design Quote</button>
+  <button id='btn-chuck'>Chuck Norris</button>
+  <button id='btn-cat'>Cat Facts</button>
 </div>
 
-<div id='posts'>
-  <h3>These are some wonderful posts from our users:</h3>
-  <% @posts.each do |p| %>
-    <p class=<%= p.user.name %> >"<%= p.content %>" - posted by <%= p.user.name %></p>
+<div id='content'>
+
+  <div id='posts'>
+    <h3>These are some wonderful posts from our users:</h3>
+    <% @posts.each do |p| %>
+      <p class=<%= p.user.name %> >"<%= p.content %>" - posted by <b><%= p.user.name %></b></p>
+    <% end %>
+  </div>
   <% end %>
-</div>
-<% end %>
 
-<div id='quote'>
-  <% for i in 0..5 %>
-  <%= @quote[i]['content'].html_safe %>
-  <% end %>
-</div>
+  <div id='quote', class='stuff'>
+    <h3>Some quotes on Design:</h3>
+    <% for i in 0..2 %>
+    <%= @quote[i]['content'].html_safe %>
+    <% end %>
+  </div>
 
-<div id='chuck'>
-  <%= %>
-</div>
+  <div id='chuck', class='stuff'>
+    <h3>Chuck Norris this Shiz:</h3>
+    <% for i in 0..5 %>
+    <p><%= @chuck['value'][i]['joke'].html_safe %></p>
+    <% end %>
+  </div>
 
-<div id='catfact'>
-  <%= %>
+  <div id='catfact', class='stuff'>
+    <h3>Facts ... about Cats:</h3>
+    <% for i in 0..5 %>
+    <p><%= @catfact[:facts][i] %></p>
+    <% end %>
+  </div>
+
 </div>

@@ -2,6 +2,8 @@ class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   # Before running anything in this controller, check the dude is logged in
   before_filter :authorize
+  # Only allow edit and destroy if owned by user
+  before_filter :require_permission, only: [:edit, :destroy]
 
   # Index page '/'
   def home
@@ -12,11 +14,12 @@ class PostsController < ApplicationController
     quotes = HTTParty.get('http://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=10')
     chuck = HTTParty.get('http://api.icndb.com/jokes/random/10')
     catfacts = HTTParty.get('http://catfacts-api.appspot.com/api/facts?number=10')
+
     # making accessible by ERB under a variable
     @quote = quotes
     @chuck = chuck
-    @catfact = catfacts
-
+      # eval() is bad practice
+    @catfact = eval(catfacts)
   end
 
   # GET /posts
@@ -32,7 +35,7 @@ class PostsController < ApplicationController
 
   # GET /posts/new
   def new
-    @post = Post.new
+
   end
 
   # GET /posts/1/edit
@@ -43,6 +46,9 @@ class PostsController < ApplicationController
   # POST /posts.json
   def create
     @post = Post.new(post_params)
+    @post.content = post_params[:content]
+    @post.user_id = @current_user.id
+    @post.save
 
     respond_to do |format|
       if @post.save
@@ -58,6 +64,10 @@ class PostsController < ApplicationController
   # PATCH/PUT /posts/1
   # PATCH/PUT /posts/1.json
   def update
+    # @post = Post.find(params[:id])
+      @post.content = params[:content]
+      @post.save
+
     respond_to do |format|
       if @post.update(post_params)
         format.html { redirect_to @post, notice: 'Post was successfully updated.' }
@@ -88,5 +98,12 @@ class PostsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
       params.require(:post).permit(:content, :user_id)
+    end
+
+    # The method to check if user owns rights to edit/delete - redirect if no permission
+    def require_permission
+      if current_user != Post.find(params[:id]).user
+        redirect_to '/posts'
+      end
     end
 end

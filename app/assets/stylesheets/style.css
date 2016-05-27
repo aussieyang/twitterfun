@@ -22,11 +22,54 @@ body {
   width: 10%;
 }
 
+#top-menu a {
+  width: 10%;
+}
+
+#top-menu a img {
+  width: 100%;
+}
+
 #top-menu p {
   padding-right: 20px;
 }
 
+/* Index view */
+
+#controls {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 50px;
+  height: 50px;
+}
+
+#controls > button {
+  width: 15%;
+  height: 100%;
+  font-size: 1em;
+}
+
+#controls div {
+  height: 100%;
+}
+
+#controls div input,button {
+  height: 100%;
+  font-size: 1em;
+}
+
+#content {
+  display: flex;
+  justify-content: space-around;
+}
+
 #posts {
-  width: 100%;
-  padding: 5%;
+  width: 45%;
+  padding: 2%;
+}
+
+.stuff {
+  display: none;
+  width: 45%;
+  padding: 2%;
 }
